@@ -38,13 +38,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.cors(Customizer.withDefaults()) //
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**").disable())
+                .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.disable())
                 .authorizeHttpRequests(
                         configure -> configure
-                                .requestMatchers(HttpMethod.GET,"/users/check-role").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/users/{userId}/**").hasRole("ADMIN")
-                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/api/v1/auth/**","/h2-console/**","/swagger-ui/**","/swagger-resources/**","/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

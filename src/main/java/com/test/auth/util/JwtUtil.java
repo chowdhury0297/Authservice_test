@@ -53,7 +53,7 @@ public class JwtUtil {
      */
     public String generateToken(String username, Map<String, Object> extraClaims) {
         Instant now = Instant.now();
-        Instant expiry = now.plusMillis(expiration);
+        Instant expiry = now.plusMillis(expiration*60*1000);
 
         return Jwts.builder()
                 .setClaims(extraClaims)               // Adds dynamic claims like role, userId, etc.

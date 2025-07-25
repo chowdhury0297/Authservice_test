@@ -7,6 +7,7 @@ public enum Status {
     ON_HOLD,
     COMPLETED,
     CANCELLED,
-    FAILED
+    FAILED,
+    SUCCESS
 
 }

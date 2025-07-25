@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
-        return new AuthResponse("User registered successfully!", registerRequest.getEmail(), "");
+        return new AuthResponse("User registered successfully!", registerRequest.getUsername(), "");
 
 
     }
@@ -88,7 +88,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse login(LoginRequestDto loginRequest) {
 
         try{
-            UserEntity user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            UserEntity user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
             boolean matches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
             if (!matches) {
                 throw new WrongPasswordException("Wrong password");
@@ -97,7 +97,7 @@ public class AuthServiceImpl implements AuthService {
             dataInJwt.put("roles", user.getRole());
             dataInJwt.put("email", user.getEmail());
         String jwt = jwtUtil.generateToken(user.getUsername(), dataInJwt);
-            return new AuthResponse("User logged in successfully!", loginRequest.getEmail(), jwt);
+            return new AuthResponse("User logged in successfully!", loginRequest.getUsername(), jwt);
         }catch (Exception e){
             throw new EntityNotFoundException("User name or password is invalid !");
         }

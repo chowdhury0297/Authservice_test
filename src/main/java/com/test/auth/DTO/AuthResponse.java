@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Builder
 public class AuthResponse {
 
-    public AuthResponse(String message, String email, String token) {
+    public AuthResponse(String message, String username, String token) {
         this.message = message;
-        this.email = email;
+        this.username = username;
         this.token = token;
     }
 
     private String message;
 
-    private String email;
+    private String username;
 
     private String token;
 
@@ -29,12 +29,12 @@ public class AuthResponse {
         this.message = message;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getToken() {
